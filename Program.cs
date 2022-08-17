@@ -19,8 +19,12 @@ namespace Test_2
             {
                 List<string> exportSVC = new List<string>();
 
-                List<string> GPSLong = new List<string>();
-                List<string> GPSLat = new List<string>();
+                List<string>[] dataArray = new List<string>[14];
+
+                for (int i = 0; i < 14; i++)
+                {
+                    dataArray[i] = new List<string>();
+                }
 
                 StringBuilder csv = new StringBuilder();
 
@@ -29,36 +33,44 @@ namespace Test_2
                     string line = reader.ReadLine();
                     string[] values = line.Split(';');
 
-                    GPSLong.Add(values[2]);
-                    GPSLat.Add(values[3]);
+                    for ( int i = 0; i < 13; i++)
+                    {
+                        dataArray[i].Add(values[i]);
+                    }
                 }
 
-                for (int i = 2; i < GPSLong.Count - 1; i++)
+                /*for (int y = 0; y < 13; y++)
                 {
-                    GPSLong[i] = GPSLong[i].Replace(".", string.Empty);
-
-                    GPSLong[i] = GPSLong[i].Insert(1, ".");
-
-
-                    GPSLat[i] = GPSLat[i].Replace(".", string.Empty);
-
-                    GPSLat[i] = GPSLat[i].Insert(2, ".");
-                }
-
-                for (int i = 2; i < GPSLong.Count - 1; i++)
-                {
-                    exportSVC.Add(GPSLong[i] + ", " + GPSLat[i]);
-
-                    csv.AppendLine(exportSVC[i - 2]);
-                }
-
+                    for (int i = 0; i < dataArray[y].Count; i++)
+                    {
+                        Console.WriteLine(dataArray[y][i]);
+                    }
+                }*/
                 
 
-                
+                for (int i = 2; i < dataArray[2].Count - 1; i++)
+                {
+                    dataArray[2][i] = dataArray[2][i].Replace(".", string.Empty);
 
+                    dataArray[2][i] = dataArray[2][i].Insert(1, ".");
+
+
+                    dataArray[3][i] = dataArray[3][i].Replace(".", string.Empty);
+
+                    dataArray[3][i] = dataArray[3][i].Insert(2, ".");
+                }
+
+
+                for (int i = 0; i < dataArray[3].Count - 1; i++)
+                {
+                    dataArray[13].Add(dataArray[2][i] + ", " + dataArray[3][i]);
+
+                    csv.AppendLine(dataArray[0][i] + ";" + dataArray[1][i] + ";" + dataArray[2][i] + ";" + dataArray[3][i] + ";" + dataArray[4][i] + ";" + dataArray[5][i] + ";" + dataArray[6][i] + ";" + dataArray[7][i] + ";" + dataArray[8][i] + ";" + dataArray[9][i] + ";" + dataArray[10][i] + ";" + dataArray[11][i] + ";" + dataArray[12][i] + ";" + dataArray[13][i]);
+                }
+                
+                
                 File.WriteAllText(@"C:\Users\Patrick H. Thomsen\Dropbox\Skole Arbejde\Programmering\Tilpasning af dronedata projekt/flyvning2.csv", csv.ToString());
 
-                Console.ReadKey();
             }
         }
     }
